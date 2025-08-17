@@ -1,0 +1,230 @@
+/* Custom styles to complement TailwindCSS */
+
+/* Smooth transitions for all interactive elements */
+* {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Custom focus styles */
+input:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Button hover effects */
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Navigation menu styles */
+.nav-item {
+    background-color: #f8fafc;
+    color: #64748b;
+    border: 1px solid transparent;
+}
+
+.nav-item:hover {
+    background-color: #e2e8f0;
+    color: #475569;
+}
+
+.nav-item.active {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.nav-item.active:hover {
+    background-color: #2563eb;
+    color: white;
+}
+
+/* Section visibility */
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Loading animation */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .flex {
+        flex-direction: column;
+    }
+
+    .gap-3 {
+        gap: 0.75rem;
+    }
+
+    /* Mobile navigation */
+    nav .flex {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-item {
+        flex-shrink: 0;
+        min-width: auto;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .bg-gray-50 {
+        background-color: #ffffff;
+    }
+
+    .border-gray-300 {
+        border-color: #000000;
+    }
+
+    .nav-item {
+        border-color: #000000;
+    }
+}
+
+/* Status indicators */
+.status-available {
+    color: #059669;
+    font-weight: 600;
+}
+
+.status-unavailable {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.status-error {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* Feriados list styling */
+.feriado-item {
+    border-left: 4px solid #3b82f6;
+    padding-left: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.feriado-date {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.feriado-name {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+/* CNPJ formatting */
+.cnpj-formatted {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.05em;
+}
+
+/* Câmbio styles */
+.moeda-item {
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background-color: #ffffff;
+}
+
+.moeda-item:hover {
+    border-color: #3b82f6;
+    background-color: #f8fafc;
+    transform: translateY(-1px);
+}
+
+.moeda-item.selected {
+    border-color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+.moeda-item.selected:hover {
+    border-color: #2563eb;
+    background-color: #dbeafe;
+}
+
+.moeda-code {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1.125rem;
+}
+
+.moeda-name {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Currency formatting */
+.currency-value {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+}
+
+.currency-positive {
+    color: #059669;
+}
+
+.currency-negative {
+    color: #dc2626;
+}
+
+.currency-neutral {
+    color: #6b7280;
+}
