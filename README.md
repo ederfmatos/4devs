@@ -1,224 +1,164 @@
-# Consultas públicas brasileiras
+# 4devs - Ferramentas para Desenvolvedores
 
-Uma aplicação web completa para consultas públicas brasileiras usando a Brasil API.
-
-🌐 **Acesse a aplicação:** [https://brasil.ederfmatos.dev](https://brasil.ederfmatos.dev)
+Uma aplicação web moderna que oferece diversas ferramentas úteis para desenvolvedores, incluindo geradores, validadores e consultas de dados brasileiros.
 
 ## 🚀 Funcionalidades
 
-### 📍 **Consulta CEP**
+### 🔍 Consultas
 
-- Formatação automática do CEP (00000-000)
-- Validação de formato antes da consulta
-- Busca informações completas do endereço
-- Exibe logradouro, bairro, cidade, estado e DDD
+- **CEP**: Busca informações de endereço por CEP
+- **CNPJ**: Consulta dados completos de empresas
+- **Feriados**: Lista feriados nacionais por ano
+- **Domínios**: Verifica disponibilidade de domínios .br
+- **Câmbio**: Cotações em tempo real das principais moedas
 
-### 🏢 **Consulta CNPJ**
+### 🔧 Geradores
 
-- Formatação automática do CNPJ (00.000.000/0000-00)
-- Validação de formato antes da consulta
-- Busca informações completas da empresa
-- Exibe razão social, nome fantasia, situação, data de abertura, tipo, porte e capital social
+- **CPF**: Gera CPFs válidos aleatórios
+- **CNPJ**: Gera CNPJs válidos aleatórios
+- **CEP**: Gera CEPs aleatórios
+- **Senhas**: Gerador de senhas seguras com opções customizáveis
+- **UUID**: Gera UUIDs v4
 
-### 📅 **Feriados Nacionais**
+### ✅ Validadores
 
-- Seletor de anos (2020 até ano atual + 1)
-- Lista todos os feriados nacionais do ano selecionado
-- Exibe data formatada e nome do feriado
-- Interface organizada e fácil de navegar
+- **CPF**: Valida CPFs com detalhes da verificação
+- **CNPJ**: Valida CNPJs com detalhes da verificação
+- **Senhas**: Analisa força e segurança de senhas
 
-### 🌐 **Consulta Registro.br**
+## 🛠️ Tecnologias
 
-- Verificação de disponibilidade de domínios
-- Consulta status de domínios .br
-- Exibe informações de disponibilidade
-- Interface clara com indicadores visuais
+- **Frontend**: React 18 + TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **State Management**: React Hooks
+- **HTTP Client**: Axios
 
-### 💱 **Consulta Câmbio**
+## 📦 Instalação
 
-- Lista todas as moedas disponíveis
-- Seleção de moeda e data
-- Consulta cotações históricas
-- Exibe valores de compra, venda e variação
-- Interface em duas etapas (moeda → data)
+1. Clone o repositório:
 
-## 🛠️ Tecnologias Utilizadas
-
-- **HTML5**: Estrutura semântica e acessível
-- **CSS3**: Estilos customizados e responsivos
-- **TailwindCSS**: Framework CSS utilitário
-- **JavaScript (ES6+)**: Lógica da aplicação
-- **Brasil API**: APIs públicas brasileiras
-- **Remix Icons**: Ícones modernos e intuitivos
-
-## 📁 Estrutura do Projeto
-
-```
-consultas-publicas-brasileiras/
-├── index.html      # Página principal com todas as seções
-├── styles.css      # Estilos customizados
-├── script.js       # Lógica JavaScript completa
-└── README.md       # Documentação
+```bash
+git clone https://github.com/seu-usuario/4devs.git
+cd 4devs
 ```
 
-## 🎯 Como Usar
+2. Instale as dependências:
 
-### Navegação
-
-1. Use o menu superior para navegar entre as diferentes consultas
-2. Cada seção tem sua própria interface e funcionalidades
-
-### Consulta CEP
-
-1. Digite um CEP no campo (formato: 00000-000)
-2. Clique em "Buscar" ou pressione Enter
-3. Visualize as informações do endereço
-
-### Consulta CNPJ
-
-1. Digite um CNPJ no campo (formato: 00.000.000/0000-00)
-2. Clique em "Buscar" ou pressione Enter
-3. Visualize as informações da empresa
-
-### Feriados Nacionais
-
-1. Selecione um ano no dropdown
-2. Clique em "Buscar"
-3. Visualize todos os feriados do ano selecionado
-
-### Consulta Registro.br
-
-1. Digite um domínio no campo (ex: exemplo.com.br)
-2. Clique em "Verificar"
-3. Visualize a disponibilidade do domínio
-
-### Consulta Câmbio
-
-1. Selecione uma moeda da lista disponível
-2. Escolha uma data para consultar a cotação
-3. Clique em "Consultar"
-4. Visualize os valores de compra, venda e variação
-
-## 🔧 Funcionalidades Técnicas
-
-### Formatação Automática
-
-- **CEP**: Remove caracteres não numéricos e adiciona hífen
-- **CNPJ**: Formata automaticamente com pontos e barras
-- **Domínios**: Aceita entrada livre
-
-### Validação
-
-- Verifica formato antes de fazer requisições
-- Feedback visual para erros
-- Mensagens claras para o usuário
-
-### Estados da Interface
-
-- **Loading**: Animação durante consultas
-- **Erro**: Mensagens claras quando não encontra dados
-- **Sucesso**: Exibição organizada dos resultados
-
-### Responsividade
-
-- Layout adaptável para diferentes tamanhos de tela
-- Menu de navegação responsivo
-- Botões e campos otimizados para mobile
-
-## 🌐 APIs Utilizadas
-
-### CEP API
-
-```
-GET https://brasilapi.com.br/api/cep/v1/{cep}
+```bash
+npm install
 ```
 
-### CNPJ API
+3. Execute o projeto em modo de desenvolvimento:
 
-```
-GET https://brasilapi.com.br/api/cnpj/v1/{cnpj}
-```
-
-### Feriados API
-
-```
-GET https://brasilapi.com.br/api/feriados/v1/{year}
+```bash
+npm run dev
 ```
 
-### Registro.br API
+4. Acesse a aplicação em `http://localhost:5173`
+
+## 🏗️ Estrutura do Projeto
 
 ```
-GET https://brasilapi.com.br/api/registrobr/v1/{domain}
+src/
+├── components/          # Componentes React
+│   ├── generators/      # Geradores (CPF, CNPJ, CEP, etc.)
+│   ├── searchers/       # Consultas (CEP, CNPJ, etc.)
+│   ├── validators/      # Validadores (CPF, CNPJ, etc.)
+│   └── *.tsx           # Componentes compartilhados
+├── domain/             # Classes de domínio
+│   ├── Cep.ts         # Lógica de CEP
+│   ├── Cpf.ts         # Lógica de CPF
+│   ├── Cnpj.ts        # Lógica de CNPJ
+│   └── Password.ts    # Lógica de senhas
+├── hooks/              # Hooks customizados
+├── services/           # Serviços de API
+├── types/              # Definições de tipos TypeScript
+└── utils/              # Utilitários
 ```
 
-### Câmbio API
+## 🎯 Arquitetura
 
+### Domain-Driven Design
+
+O projeto utiliza classes de domínio para encapsular a lógica de negócio:
+
+```typescript
+// Exemplo de uso da classe Cpf
+const cpf = new Cpf('123.456.789-09')
+console.log(cpf.isValid()) // true
+console.log(cpf.format()) // '123.456.789-09'
+
+// Gerar CPF aleatório
+const randomCpf = Cpf.generate()
 ```
-GET https://brasilapi.com.br/api/cotacao/v1/moedas
-GET https://brasilapi.com.br/api/cotacao/v1/{moeda}?data={data}
+
+### Componentes Modulares
+
+Cada funcionalidade é organizada em componentes independentes com seus próprios hooks:
+
+```typescript
+// Hook local do componente
+const useCpfGenerator = () => {
+  const [quantity, setQuantity] = useState(1)
+  const [generatedCpfs, setGeneratedCpfs] = useState<Cpf[]>([])
+  
+  const generateCpfs = () => {
+    const cpfs = Cpf.generateMultiple(quantity)
+    setGeneratedCpfs(cpfs)
+  }
+  
+  return { quantity, setQuantity, generatedCpfs, generateCpfs }
+}
 ```
 
-## 🎨 Design
+## 🔌 APIs Utilizadas
 
-- **Interface moderna**: Design limpo e profissional
-- **Navegação intuitiva**: Menu claro e fácil de usar
-- **Cores consistentes**: Paleta baseada no TailwindCSS
-- **Animações suaves**: Transições e feedback visual
-- **Ícones intuitivos**: Remix Icons para melhor UX
-- **Tipografia legível**: Hierarquia visual clara
+- **Brasil API**: CEP, CNPJ, Feriados, Câmbio
+- **Registro.br**: Consulta de domínios
 
-## 📱 Compatibilidade
+## 📱 Interface
 
-- ✅ Chrome (recomendado)
-- ✅ Firefox
-- ✅ Safari
-- ✅ Edge
-- ✅ Mobile browsers
+- **Design Responsivo**: Funciona em desktop, tablet e mobile
+- **Tema Claro**: Interface limpa e moderna
+- **Navegação Lateral**: Menu organizado por categorias
+- **Feedback Visual**: Indicadores de loading, sucesso e erro
 
-## 🚀 Como Executar
+## 🚀 Scripts Disponíveis
 
-1. Clone ou baixe os arquivos
-2. Abra `index.html` no navegador
-3. Comece a usar!
+```bash
+npm run dev          # Executa em modo desenvolvimento
+npm run build        # Gera build de produção
+npm run preview      # Visualiza build de produção
+npm run lint         # Executa linter
+```
 
-Não é necessário servidor local ou instalação de dependências.
+## 🤝 Contribuindo
 
-## 🔍 Exemplos de Uso
-
-### CEP
-
-- **Entrada**: `01001000`
-- **Resultado**: Informações do endereço em São Paulo
-
-### CNPJ
-
-- **Entrada**: `00000000000191`
-- **Resultado**: Informações da Petrobras
-
-### Feriados
-
-- **Entrada**: `2024`
-- **Resultado**: Lista de feriados nacionais de 2024
-
-### Registro.br
-
-- **Entrada**: `google.com.br`
-- **Resultado**: Status de disponibilidade do domínio
-
-### Câmbio
-
-- **Entrada**: `USD` + `2024-01-15`
-- **Resultado**: Cotação do dólar americano na data especificada
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
 ## 📄 Licença
 
-Este projeto é de código aberto e pode ser usado livremente.
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-## 🤝 Contribuição
+## 👨‍💻 Autor
 
-Contribuições são bem-vindas! Sinta-se à vontade para:
+**Eder Ferreira de Matos**
 
-- Reportar bugs
-- Sugerir novas funcionalidades
-- Melhorar a documentação
-- Adicionar novas APIs da Brasil API
+- GitHub: [@ederfmatos](https://github.com/ederfmatos)
+
+## 🙏 Agradecimentos
+
+- [Brasil API](https://brasilapi.com.br/) - APIs públicas brasileiras
+- [Registro.br](https://registro.br/) - Consulta de domínios
+- [Lucide](https://lucide.dev/) - Ícones
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
+
+---
+
+⭐ Se este projeto te ajudou, considere dar uma estrela no repositório!
