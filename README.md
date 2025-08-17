@@ -2,6 +2,8 @@
 
 Uma aplicação web completa para consultas públicas brasileiras usando a Brasil API.
 
+🌐 **Acesse a aplicação:** [https://brasil.ederfmatos.dev](https://brasil.ederfmatos.dev)
+
 ## 🚀 Funcionalidades
 
 ### 📍 **Consulta CEP**
