@@ -10,6 +10,10 @@ const FeriadosSearcher = () => {
         error,
         feriados,
         getFeriadosByMonth,
+        searchFeriados,
+        formatDate,
+        getDayOfWeek,
+        getMonthName
     } = useFeriadosSearcher()
 
     const yearOptions = Array.from({ length: 10 }, (_, i) => {
@@ -43,7 +47,7 @@ const FeriadosSearcher = () => {
                     <div className="w-48">
                         <Select
                             value={year.toString()}
-                            // onChange={(e) => handleYearChange(Number(e.target.value))}
+                            onChange={(e) => searchFeriados(Number(e.target.value))}
                             options={yearOptions}
                             label="Ano"
                             size="md"
@@ -70,7 +74,7 @@ const FeriadosSearcher = () => {
                     </div>
                     <p className="text-red-700 mb-4">{error}</p>
                     <Button
-                        // onClick={() => handleYearChange(year)}
+                        onClick={() => searchFeriados(year)}
                         variant="danger"
                         size="md"
                     >
@@ -85,7 +89,7 @@ const FeriadosSearcher = () => {
                         <div key={month} className="bg-white rounded-lg shadow-md p-6">
                             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
                                 <Icons.Calendar className="w-5 h-5 text-blue-600" />
-                                {month}
+                                {getMonthName(Number(month))}
                             </h3>
                             <div className="space-y-3">
                                 {monthFeriados.map((feriado, index) => (
@@ -94,7 +98,7 @@ const FeriadosSearcher = () => {
                                             {feriado.name}
                                         </div>
                                         <div className="text-sm text-gray-600">
-                                            {/* {formatDate(feriado.date)} - {getDayOfWeek(feriado.date)} */}
+                                            {formatDate(feriado.date)} - {getDayOfWeek(feriado.date)}
                                         </div>
                                         <div className="text-xs text-gray-500 mt-1">
                                             {feriado.type}

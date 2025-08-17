@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { feriadosService } from '@/services'
 import type { Feriado } from '@/types'
 
@@ -7,6 +7,10 @@ export const useFeriadosSearcher = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [feriados, setFeriados] = useState<Feriado[]>([])
+
+    useEffect(() => {
+        searchFeriados()
+    }, [])
 
     const searchFeriados = async (yearValue?: number) => {
         const yearToSearch = yearValue || year
@@ -39,7 +43,7 @@ export const useFeriadosSearcher = () => {
         const feriadosByMonth: { [key: number]: Feriado[] } = {}
 
         feriados.forEach(feriado => {
-            const month = new Date(feriado.date).getMonth()
+            const month = new Date(feriado.date).getMonth() + 1
             if (!feriadosByMonth[month]) {
                 feriadosByMonth[month] = []
             }
@@ -47,6 +51,11 @@ export const useFeriadosSearcher = () => {
         })
 
         return feriadosByMonth
+    }
+
+    const getMonthName = (month: number) => {
+        const months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+        return months[month - 1]
     }
 
     const getFeriadosByType = () => {
@@ -62,6 +71,18 @@ export const useFeriadosSearcher = () => {
         return feriadosByType
     }
 
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString)
+        date.setDate(date.getDate() + 1)
+        return date.toLocaleDateString('pt-BR')
+    }
+
+    const getDayOfWeek = (dateString: string) => {
+        const date = new Date(dateString)
+        date.setDate(date.getDate() + 1)
+        return date.toLocaleDateString('pt-BR', { weekday: 'long' })
+    }
+
     return {
         year,
         setYear,
@@ -71,6 +92,9 @@ export const useFeriadosSearcher = () => {
         searchFeriados,
         clearSearch,
         getFeriadosByMonth,
-        getFeriadosByType
+        getFeriadosByType,
+        formatDate,
+        getDayOfWeek,
+        getMonthName
     }
 } 
