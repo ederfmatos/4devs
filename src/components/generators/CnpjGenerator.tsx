@@ -1,189 +1,201 @@
-import { useState } from 'react'
-import { Cnpj } from '@/domain'
-import Icons from '@/components/Icons'
-import Button from '@/components/Button'
-import Select from '../Select'
+import { Button, Icons, Select, Text } from '@/components';
+import { Cnpj } from '@/domain';
+import { useState } from 'react';
 
 const CnpjGeneratorComponent = () => {
-    const [generatedCnpj, setGeneratedCnpj] = useState<Cnpj | null>(null)
-    const [quantity, setQuantity] = useState(1)
-    const [multipleResults, setMultipleResults] = useState<Cnpj[]>([])
-    const [copyFeedback, setCopyFeedback] = useState('')
+  const [quantity, setQuantity] = useState(1);
+  const [generatedCnpjs, setGeneratedCnpjs] = useState<Cnpj[]>([]);
+  const [copyFeedback, setCopyFeedback] = useState('');
 
-    const generateSingleCnpj = () => {
-        const cnpj = Cnpj.generate()
-        setGeneratedCnpj(cnpj)
-        setMultipleResults([])
+  const generateCnpjs = () => {
+    if (quantity < 1 || quantity > 100) {
+      return;
     }
 
-    const generateMultipleCnpjs = () => {
-        const cnpjs = Cnpj.generateMultiple(quantity)
-        setMultipleResults(cnpjs)
-        setGeneratedCnpj(null)
+    const cnpjs = Cnpj.generateMultiple(quantity);
+    setGeneratedCnpjs(cnpjs);
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      showCopyFeedback('CNPJ copiado!');
+    } catch (err) {
+      showCopyFeedback('Erro ao copiar');
     }
+  };
 
-    const copyToClipboard = async (text: string) => {
-        try {
-            await navigator.clipboard.writeText(text)
-            showCopyFeedback('CNPJ copiado!')
-        } catch (err) {
-            showCopyFeedback('Erro ao copiar')
-        }
+  const copyAllCnpjs = async () => {
+    if (generatedCnpjs.length === 0) return;
+
+    const cnpjsText = generatedCnpjs
+      .map((cnpj, index) => `${index + 1}. ${cnpj.format()}`)
+      .join('\n');
+
+    try {
+      await navigator.clipboard.writeText(cnpjsText);
+      showCopyFeedback('Todos os CNPJs copiados!');
+    } catch (err) {
+      showCopyFeedback('Erro ao copiar');
     }
+  };
 
-    const copyAllCnpjs = async () => {
-        if (multipleResults.length === 0) return
+  const showCopyFeedback = (message: string) => {
+    setCopyFeedback(message);
+    setTimeout(() => setCopyFeedback(''), 2000);
+  };
 
-        const allCnpjs = multipleResults.map(cnpj => cnpj.format()).join('\n')
-        try {
-            await navigator.clipboard.writeText(allCnpjs)
-            showCopyFeedback('Todos os CNPJs copiados!')
-        } catch (err) {
-            showCopyFeedback('Erro ao copiar')
-        }
-    }
+  const clearResults = () => {
+    setGeneratedCnpjs([]);
+  };
 
-    const showCopyFeedback = (message: string) => {
-        setCopyFeedback(message)
-        setTimeout(() => setCopyFeedback(''), 2000)
-    }
+  return (
+    <div>
+      <div className='text-center mb-8'>
+        <Text
+          variant='h2'
+          className='mb-2 flex items-center justify-center gap-2'
+        >
+          <Icons.Building className='w-6 h-6 text-blue-600' />
+          Gerador de CNPJ
+        </Text>
+        <Text variant='body' color='secondary'>
+          Gere CNPJs válidos aleatoriamente
+        </Text>
+      </div>
 
-    return (
-        <div>
-            <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center justify-center gap-2">
-                    <Icons.Building className="w-6 h-6 text-blue-600" />
-                    Gerador de CNPJ
-                </h2>
-                <p className="text-gray-600">Gere CNPJs válidos para testes e desenvolvimento</p>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 items-end">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Quantidade
-                        </label>
-
-                        <Select
-                            options={[{ value: 1, label: '1' }, { value: 5, label: '5' }, { value: 10, label: '10' }, { value: 20, label: '20' }, { value: 50, label: '50' }]}
-                            value={quantity}
-                            onChange={(e) => setQuantity(Number(e.target.value))}
-                        />
-                    </div>
-
-                    <div className="md:col-span-1 flex gap-3">
-                        <Button
-                            onClick={generateSingleCnpj}
-                            icon="Plus"
-                            variant="primary"
-                            size="md"
-                            fullWidth
-                        >
-                            Gerar 1 CNPJ
-                        </Button>
-
-                        <Button
-                            onClick={generateMultipleCnpjs}
-                            icon="RefreshCw"
-                            variant="success"
-                            size="md"
-                            fullWidth
-                        >
-                            Gerar {quantity} CNPJs
-                        </Button>
-                    </div>
-                </div>
-            </div>
-
-            {generatedCnpj && (
-                <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-gray-900">CNPJ Gerado</h3>
-                        <div className="flex items-center gap-2">
-                            <span className="text-green-600 text-sm font-medium">✓ Válido</span>
-                            <Button
-                                onClick={() => copyToClipboard(generatedCnpj.format())}
-                                icon="Copy"
-                                variant="outline"
-                                size="sm"
-                            >
-                                Copiar
-                            </Button>
-                        </div>
-                    </div>
-
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                        <p className="text-2xl font-mono text-gray-900 text-center">{generatedCnpj.format()}</p>
-                    </div>
-
-                    <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-                        <div className="flex items-center gap-2">
-                            <Icons.CheckCircle className="w-5 h-5 text-green-600" />
-                            <span className="text-green-800 text-sm">
-                                Este CNPJ é válido e pode ser usado para testes
-                            </span>
-                        </div>
-                    </div>
-                </div>
+      <div className='bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 border border-gray-200 dark:border-gray-700'>
+        <div className='flex flex-col sm:flex-row gap-4 items-center items-end'>
+          <div className='flex-1'>
+            <Text variant='label' color='primary' className='mb-2'>
+              Quantidade de CNPJs
+            </Text>
+            <Select
+              options={[
+                { value: 1, label: '1' },
+                { value: 2, label: '2' },
+                { value: 3, label: '3' },
+                { value: 4, label: '4' },
+                { value: 5, label: '5' },
+                { value: 6, label: '6' },
+                { value: 7, label: '7' },
+                { value: 8, label: '8' },
+                { value: 9, label: '9' },
+                { value: 10, label: '10' },
+              ]}
+              value={quantity}
+              onChange={e =>
+                setQuantity(
+                  Math.max(1, Math.min(100, parseInt(e.target.value) || 1))
+                )
+              }
+            />
+          </div>
+          <div className='flex gap-3'>
+            <Button
+              onClick={generateCnpjs}
+              icon='Plus'
+              variant='primary'
+              size='md'
+            >
+              Gerar CNPJs
+            </Button>
+            {generatedCnpjs.length > 0 && (
+              <Button onClick={clearResults} variant='secondary' size='md'>
+                Limpar
+              </Button>
             )}
-
-            {multipleResults.length > 0 && (
-                <div className="bg-white rounded-lg shadow-md p-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-semibold text-gray-900">
-                            {multipleResults.length} CNPJ{multipleResults.length > 1 ? 's' : ''} Gerado{multipleResults.length > 1 ? 's' : ''}
-                        </h3>
-                        <Button
-                            onClick={copyAllCnpjs}
-                            icon="Copy"
-                            variant="primary"
-                            size="md"
-                        >
-                            Copiar Todos
-                        </Button>
-                    </div>
-
-                    <div className="space-y-2 max-h-96 overflow-y-auto">
-                        {multipleResults.map((cnpj, index) => (
-                            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                <div className="flex items-center gap-3">
-                                    <span className="text-sm text-gray-500 w-8">#{index + 1}</span>
-                                    <span className="font-mono text-gray-900">{cnpj.format()}</span>
-                                    <span className="text-green-600 text-xs">✓ Válido</span>
-                                </div>
-                                <Button
-                                    onClick={() => copyToClipboard(cnpj.format())}
-                                    className="px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-200"
-                                >
-                                    <Icons.Copy className="w-4 h-4" />
-                                </Button>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {copyFeedback && (
-                <div className="fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300">
-                    {copyFeedback}
-                </div>
-            )}
-
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
-                <div className="flex items-start gap-3">
-                    <Icons.Info className="w-5 h-5 text-blue-600 mt-0.5" />
-                    <div>
-                        <h4 className="text-blue-900 font-medium mb-1">Sobre os CNPJs Gerados</h4>
-                        <p className="text-blue-800 text-sm">
-                            Todos os CNPJs gerados são válidos e seguem o algoritmo oficial de validação brasileiro.
-                            Eles podem ser usados para testes, desenvolvimento e validação de sistemas.
-                        </p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    )
-}
+      </div>
 
-export default CnpjGeneratorComponent 
+      {generatedCnpjs.length > 0 && (
+        <div className='bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700'>
+          <div className='flex items-center justify-between mb-6'>
+            <div>
+              <Text variant='h3' weight='semibold'>
+                {generatedCnpjs.length} CNPJ
+                {generatedCnpjs.length > 1 ? 's' : ''} Gerado
+                {generatedCnpjs.length > 1 ? 's' : ''}
+              </Text>
+              <Text variant='body-sm' color='secondary'>
+                Todos os CNPJs são válidos e podem ser utilizados
+              </Text>
+            </div>
+            <Button
+              onClick={copyAllCnpjs}
+              icon='Copy'
+              variant='success'
+              size='sm'
+            >
+              Copiar Todos
+            </Button>
+          </div>
+
+          <div className='space-y-3'>
+            {generatedCnpjs.map((cnpj, index) => (
+              <div
+                key={index}
+                className='flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200'
+              >
+                <div className='flex items-center gap-3'>
+                  <Text
+                    variant='caption'
+                    color='muted'
+                    className='font-medium min-w-[40px]'
+                  >
+                    #{index + 1}
+                  </Text>
+                  <div>
+                    <Text variant='body-lg' className='font-mono'>
+                      {cnpj.format()}
+                    </Text>
+                    <div className='flex items-center gap-2 mt-1'>
+                      <span className='inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200'>
+                        <Icons.CheckCircle className='w-3 h-3 mr-1' />
+                        Válido
+                      </span>
+                      <Text variant='caption' color='muted'>
+                        Dígitos: {cnpj.getDigits()}
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+                <Button
+                  onClick={() => copyToClipboard(cnpj.format())}
+                  className='p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200'
+                >
+                  <Icons.Copy className='w-4 h-4' />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {copyFeedback && (
+        <div className='fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300'>
+          {copyFeedback}
+        </div>
+      )}
+
+      <div className='bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mt-6'>
+        <div className='flex items-start gap-3'>
+          <Icons.Info className='w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5' />
+          <div>
+            <Text variant='h5' color='info' weight='medium' className='mb-1'>
+              Sobre os CNPJs Gerados
+            </Text>
+            <Text variant='body-sm' color='info'>
+              Todos os CNPJs gerados são válidos e seguem o algoritmo oficial de
+              validação brasileiro. Eles podem ser usados para testes,
+              desenvolvimento e validação de sistemas.
+            </Text>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CnpjGeneratorComponent;

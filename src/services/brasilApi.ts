@@ -1,78 +1,82 @@
-import { brasilApiClient } from './httpClient'
+import { brasilApiClient } from './httpClient';
 import type {
-    CepData,
-    CnpjData,
-    DominioInfo,
-    Feriado,
-    CambioData,
-    CepApi,
-    CnpjApi,
-    DominiosApi,
-    FeriadosApi,
-    CambioApi
-} from '@/types'
+  CepData,
+  CnpjData,
+  DominioInfo,
+  Feriado,
+  CambioData,
+  CepApi,
+  CnpjApi,
+  DominiosApi,
+  FeriadosApi,
+  CambioApi,
+} from '@/types';
 
-export class BrasilApiService implements CepApi, CnpjApi, DominiosApi, FeriadosApi, CambioApi {
-    async searchCep(cep: string): Promise<CepData> {
-        const cleanCep = cep.replace(/\D/g, '')
+export class BrasilApiService
+  implements CepApi, CnpjApi, DominiosApi, FeriadosApi, CambioApi
+{
+  async searchCep(cep: string): Promise<CepData> {
+    const cleanCep = cep.replace(/\D/g, '');
 
-        if (cleanCep.length !== 8) {
-            throw new Error('CEP deve conter 8 dígitos')
-        }
-
-        return brasilApiClient.get<CepData>(`/cep/v2/${cleanCep}`)
+    if (cleanCep.length !== 8) {
+      throw new Error('CEP deve conter 8 dígitos');
     }
 
-    async searchCnpj(cnpj: string): Promise<CnpjData> {
-        const cleanCnpj = cnpj.replace(/\D/g, '')
+    return brasilApiClient.get<CepData>(`/cep/v2/${cleanCep}`);
+  }
 
-        if (cleanCnpj.length !== 14) {
-            throw new Error('CNPJ deve conter 14 dígitos')
-        }
+  async searchCnpj(cnpj: string): Promise<CnpjData> {
+    const cleanCnpj = cnpj.replace(/\D/g, '');
 
-        return brasilApiClient.get<CnpjData>(`/cnpj/v1/${cleanCnpj}`)
+    if (cleanCnpj.length !== 14) {
+      throw new Error('CNPJ deve conter 14 dígitos');
     }
 
-    async searchDomain(domain: string): Promise<DominioInfo> {
-        const cleanDomain = domain
-            .replace(/^https?:\/\//, '')
-            .replace(/^www\./, '')
-            .trim()
+    return brasilApiClient.get<CnpjData>(`/cnpj/v1/${cleanCnpj}`);
+  }
 
-        if (!cleanDomain.includes('.')) {
-            throw new Error('Domínio deve conter pelo menos um ponto')
-        }
+  async searchDomain(domain: string): Promise<DominioInfo> {
+    const cleanDomain = domain
+      .replace(/^https?:\/\//, '')
+      .replace(/^www\./, '')
+      .trim();
 
-        try {
-            return await brasilApiClient.get<DominioInfo>(`/registrobr/v1/${cleanDomain}`)
-        } catch (error: any) {
-            if (error.message.includes('404')) {
-                return {
-                    status: 'disponível',
-                    fqdn: cleanDomain,
-                    hosts: [],
-                    created: '',
-                    updated: '',
-                    nameservers: [],
-                    status_code: 404,
-                    ['expires-at']: ''
-                }
-            }
-            throw error
-        }
+    if (!cleanDomain.includes('.')) {
+      throw new Error('Domínio deve conter pelo menos um ponto');
     }
 
-    async getFeriados(year: number): Promise<Feriado[]> {
-        if (year < 1900 || year > 2100) {
-            throw new Error('Ano deve estar entre 1900 e 2100')
-        }
+    try {
+      return await brasilApiClient.get<DominioInfo>(
+        `/registrobr/v1/${cleanDomain}`,
+      );
+    } catch (error: any) {
+      if (error.message.includes('404')) {
+        return {
+          status: 'disponível',
+          fqdn: cleanDomain,
+          hosts: [],
+          created: '',
+          updated: '',
+          nameservers: [],
+          status_code: 404,
+          ['expires-at']: '',
+        };
+      }
+      throw error;
+    }
+  }
 
-        return brasilApiClient.get<Feriado[]>(`/feriados/v1/${year}`)
+  async getFeriados(year: number): Promise<Feriado[]> {
+    if (year < 1900 || year > 2100) {
+      throw new Error('Ano deve estar entre 1900 e 2100');
     }
 
-    async getCambio(): Promise<CambioData[]> {
-        return brasilApiClient.get<CambioData[]>('/cambio/v1')
-    }
+    return brasilApiClient.get<Feriado[]>(`/feriados/v1/${year}`);
+  }
+
+  async getCambio(): Promise<CambioData[]> {
+    return brasilApiClient.get<CambioData[]>('/cambio/v1');
+  }
 }
 
-export const brasilApiService = new BrasilApiService() 
+export const brasilApiService = new BrasilApiService();

@@ -1,142 +1,174 @@
-# 4devs - Ferramentas para Desenvolvedores
+# 4Devs - Ferramentas para Desenvolvedores
 
-Uma aplicação web moderna que oferece diversas ferramentas úteis para desenvolvedores, incluindo geradores, validadores e consultas de dados brasileiros.
+Uma aplicação React moderna que oferece diversas ferramentas úteis para desenvolvedores, incluindo geradores, validadores e consultas de dados.
 
 ## 🚀 Funcionalidades
 
-### 🔍 Consultas
+### 🔍 Consultas (Searchers)
 
-- **CEP**: Busca informações de endereço por CEP
-- **CNPJ**: Consulta dados completos de empresas
+- **CEP**: Consulta informações de endereços por CEP
+- **CNPJ**: Busca dados de empresas por CNPJ
+- **Domínios**: Verifica informações de domínios .br
 - **Feriados**: Lista feriados nacionais por ano
-- **Domínios**: Verifica disponibilidade de domínios .br
-- **Câmbio**: Cotações em tempo real das principais moedas
-
-### 🔧 Geradores
-
-- **CPF**: Gera CPFs válidos aleatórios
-- **CNPJ**: Gera CNPJs válidos aleatórios
-- **CEP**: Gera CEPs aleatórios
-- **Senhas**: Gerador de senhas seguras com opções customizáveis
-- **UUID**: Gera UUIDs v4
+- **Câmbio**: Consulta taxas de câmbio em tempo real
 
 ### ✅ Validadores
 
-- **CPF**: Valida CPFs com detalhes da verificação
-- **CNPJ**: Valida CNPJs com detalhes da verificação
-- **Senhas**: Analisa força e segurança de senhas
+- **CPF**: Validação completa de CPF com detalhes
+- **CNPJ**: Validação de CNPJ com algoritmo oficial
+- **Senha**: Validação de força de senha com sugestões
+
+### 🛠️ Geradores
+
+- **CEP**: Gera CEPs válidos para testes
+- **CPF**: Gera CPFs válidos
+- **CNPJ**: Gera CNPJs válidos
+- **Senha**: Gera senhas seguras com opções personalizáveis
+- **UUID**: Gera UUIDs em diferentes versões (v1-v7)
+
+## 🎨 Tema Escuro
+
+A aplicação suporta tema escuro com:
+
+- Detecção automática da preferência do sistema
+- Persistência da escolha do usuário
+- Transições suaves entre temas
+- Interface totalmente adaptada para ambos os temas
 
 ## 🛠️ Tecnologias
 
-- **Frontend**: React 18 + TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **State Management**: React Hooks
-- **HTTP Client**: Axios
+- **React 19** com TypeScript
+- **Vite** para build e desenvolvimento
+- **Tailwind CSS** para estilização
+- **Lucide React** para ícones
+- **ESLint + Prettier** para qualidade de código
 
 ## 📦 Instalação
 
-1. Clone o repositório:
-
 ```bash
-git clone https://github.com/seu-usuario/4devs.git
-cd 4devs
-```
+# Clone o repositório
+git clone <repository-url>
+cd cep
 
-2. Instale as dependências:
-
-```bash
+# Instale as dependências
 npm install
-```
 
-3. Execute o projeto em modo de desenvolvimento:
-
-```bash
+# Inicie o servidor de desenvolvimento
 npm run dev
 ```
 
-4. Acesse a aplicação em `http://localhost:5173`
+## 🔧 Scripts Disponíveis
 
-## 🏗️ Estrutura do Projeto
+### Desenvolvimento
+
+```bash
+npm run dev          # Inicia o servidor de desenvolvimento
+npm run build        # Gera build de produção
+npm run preview      # Visualiza o build de produção
+```
+
+### Qualidade de Código
+
+```bash
+npm run lint         # Executa ESLint para verificar problemas
+npm run lint:fix     # Corrige automaticamente problemas do ESLint
+npm run format       # Formata código com Prettier
+npm run format:check # Verifica se o código está formatado
+npm run type-check   # Verifica tipos TypeScript
+```
+
+### Verificações Completas
+
+```bash
+npm run check        # Executa lint + format:check + type-check
+npm run fix          # Corrige lint + formata código
+npm run check-unused # Verifica imports e código não utilizado
+npm run audit        # Executa todas as verificações
+```
+
+## 🏗️ Arquitetura
+
+### Estrutura de Pastas
 
 ```
 src/
 ├── components/          # Componentes React
-│   ├── generators/      # Geradores (CPF, CNPJ, CEP, etc.)
-│   ├── searchers/       # Consultas (CEP, CNPJ, etc.)
-│   ├── validators/      # Validadores (CPF, CNPJ, etc.)
-│   └── *.tsx           # Componentes compartilhados
+│   ├── generators/     # Geradores (CEP, CPF, CNPJ, etc.)
+│   ├── searchers/      # Consultas (CEP, CNPJ, etc.)
+│   ├── validators/     # Validadores (CPF, CNPJ, etc.)
+│   └── *.tsx          # Componentes compartilhados
 ├── domain/             # Classes de domínio
-│   ├── Cep.ts         # Lógica de CEP
-│   ├── Cpf.ts         # Lógica de CPF
-│   ├── Cnpj.ts        # Lógica de CNPJ
-│   └── Password.ts    # Lógica de senhas
 ├── hooks/              # Hooks customizados
 ├── services/           # Serviços de API
-├── types/              # Definições de tipos TypeScript
+├── types/              # Definições TypeScript
 └── utils/              # Utilitários
 ```
 
-## 🎯 Arquitetura
+### Padrões de Desenvolvimento
 
-### Domain-Driven Design
+#### Componentes
 
-O projeto utiliza classes de domínio para encapsular a lógica de negócio:
+- Cada componente tem seu próprio hook (`.hook.ts`)
+- Uso do componente `Text` para consistência de tema
+- Componente `LabelValue` para padrões label/valor
+- Suporte completo ao tema escuro
 
-```typescript
-// Exemplo de uso da classe Cpf
-const cpf = new Cpf('123.456.789-09')
-console.log(cpf.isValid()) // true
-console.log(cpf.format()) // '123.456.789-09'
+#### Domain Classes
 
-// Gerar CPF aleatório
-const randomCpf = Cpf.generate()
-```
+- Classes encapsuladas para lógica de negócio
+- Métodos para validação, formatação e geração
+- Tipos TypeScript rigorosos
 
-### Componentes Modulares
+#### Hooks
 
-Cada funcionalidade é organizada em componentes independentes com seus próprios hooks:
+- Hooks específicos para cada funcionalidade
+- Gerenciamento de estado local
+- Integração com APIs externas
 
-```typescript
-// Hook local do componente
-const useCpfGenerator = () => {
-  const [quantity, setQuantity] = useState(1)
-  const [generatedCpfs, setGeneratedCpfs] = useState<Cpf[]>([])
-  
-  const generateCpfs = () => {
-    const cpfs = Cpf.generateMultiple(quantity)
-    setGeneratedCpfs(cpfs)
-  }
-  
-  return { quantity, setQuantity, generatedCpfs, generateCpfs }
-}
-```
+## 🎯 Configuração de Qualidade
 
-## 🔌 APIs Utilizadas
+### ESLint
 
-- **Brasil API**: CEP, CNPJ, Feriados, Câmbio
-- **Registro.br**: Consulta de domínios
+- Configuração rigorosa para TypeScript e React
+- Regras para evitar código não utilizado
+- Integração com Prettier
 
-## 📱 Interface
+### Prettier
 
-- **Design Responsivo**: Funciona em desktop, tablet e mobile
-- **Tema Claro**: Interface limpa e moderna
-- **Navegação Lateral**: Menu organizado por categorias
-- **Feedback Visual**: Indicadores de loading, sucesso e erro
+- Formatação consistente do código
+- Configuração otimizada para React/TypeScript
+- Integração com ESLint
 
-## 🚀 Scripts Disponíveis
+### TypeScript
 
-```bash
-npm run dev          # Executa em modo desenvolvimento
-npm run build        # Gera build de produção
-npm run preview      # Visualiza build de produção
-npm run lint         # Executa linter
-```
+- Configuração estrita
+- Verificação de tipos em tempo de build
+- Tipos bem definidos para todas as APIs
 
-## 🤝 Contribuindo
+## 🌐 APIs Utilizadas
 
-1. Faça um fork do projeto
+- **Brasil API**: CEP, CNPJ, Domínios, Feriados, Câmbio
+- **Clipboard API**: Para copiar dados
+- **UUID Library**: Para geração de UUIDs
+
+## 📱 Responsividade
+
+A aplicação é totalmente responsiva com:
+
+- Design mobile-first
+- Sidebar colapsível em dispositivos móveis
+- Layout adaptativo para diferentes tamanhos de tela
+
+## 🔒 Segurança
+
+- Validação client-side rigorosa
+- Sanitização de inputs
+- Uso de HTTPS para todas as APIs
+- Não armazenamento de dados sensíveis
+
+## 🤝 Contribuição
+
+1. Fork o projeto
 2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
 3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
 4. Push para a branch (`git push origin feature/AmazingFeature`)
@@ -144,21 +176,12 @@ npm run lint         # Executa linter
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
-## 👨‍💻 Autor
+## 🆘 Suporte
 
-**Eder Ferreira de Matos**
-
-- GitHub: [@ederfmatos](https://github.com/ederfmatos)
-
-## 🙏 Agradecimentos
-
-- [Brasil API](https://brasilapi.com.br/) - APIs públicas brasileiras
-- [Registro.br](https://registro.br/) - Consulta de domínios
-- [Lucide](https://lucide.dev/) - Ícones
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
+Para suporte, abra uma issue no repositório ou entre em contato através dos canais disponíveis.
 
 ---
 
-⭐ Se este projeto te ajudou, considere dar uma estrela no repositório!
+**Desenvolvido com ❤️ para a comunidade de desenvolvedores brasileiros**

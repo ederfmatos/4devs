@@ -1,60 +1,60 @@
-import { useState } from 'react'
-import { cepService } from '@/services'
-import type { CepData } from '@/types'
-import { Cep } from '@/domain'
+import { useState } from 'react';
+import { cepService } from '@/services';
+import type { CepData } from '@/types';
+import { Cep } from '@/domain';
 
 export const useCepSearcher = () => {
-    const [cep, setCep] = useState('')
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
-    const [data, setData] = useState<CepData | null>(null)
+  const [cep, setCep] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [data, setData] = useState<CepData | null>(null);
 
-    const searchCep = async (cepValue?: string) => {
-        const cepToSearch = cepValue || cep
-        const cepInstance = new Cep(cepToSearch)
+  const searchCep = async (cepValue?: string) => {
+    const cepToSearch = cepValue || cep;
+    const cepInstance = new Cep(cepToSearch);
 
-        if (!cepInstance.isValid()) {
-            setError('CEP inválido')
-            return
-        }
-
-        setLoading(true)
-        setError('')
-        setData(null)
-
-        try {
-            const result = await cepService.searchCep(cepToSearch)
-            setData(result)
-        } catch (err: any) {
-            setError(err.message || 'Erro ao buscar CEP. Tente novamente.')
-        } finally {
-            setLoading(false)
-        }
+    if (!cepInstance.isValid()) {
+      setError('CEP inválido');
+      return;
     }
 
-    const clearSearch = () => {
-        setCep('')
-        setData(null)
-        setError('')
-    }
+    setLoading(true);
+    setError('');
+    setData(null);
 
-    const formatCep = (value: string) => {
-        return new Cep(value).format()
+    try {
+      const result = await cepService.searchCep(cepToSearch);
+      setData(result);
+    } catch (err: any) {
+      setError(err.message || 'Erro ao buscar CEP. Tente novamente.');
+    } finally {
+      setLoading(false);
     }
+  };
 
-    const isValidCep = (value: string) => {
-        return new Cep(value).isValid()
-    }
+  const clearSearch = () => {
+    setCep('');
+    setData(null);
+    setError('');
+  };
 
-    return {
-        cep,
-        setCep,
-        loading,
-        error,
-        data,
-        formatCep,
-        isValidCep,
-        searchCep,
-        clearSearch
-    }
-} 
+  const formatCep = (value: string) => {
+    return new Cep(value).format();
+  };
+
+  const isValidCep = (value: string) => {
+    return new Cep(value).isValid();
+  };
+
+  return {
+    cep,
+    setCep,
+    loading,
+    error,
+    data,
+    formatCep,
+    isValidCep,
+    searchCep,
+    clearSearch,
+  };
+};
