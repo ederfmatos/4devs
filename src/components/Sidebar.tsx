@@ -114,6 +114,13 @@ const sections = [
     description: 'Formate e valide JSON de forma rápida',
     category: 'Texto',
   },
+  {
+    id: 'text-sorter' as Section,
+    title: 'Ordenador de Linhas',
+    icon: 'FileText',
+    description: 'Ordene linhas alfabeticamente',
+    category: 'Texto',
+  },
 ];
 
 export default function Sidebar({

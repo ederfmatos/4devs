@@ -15,6 +15,7 @@ import {
   PasswordValidator,
   Sidebar,
   TextDeduplicator,
+  TextSorter,
   ThemeToggle,
   UuidGenerator,
 } from '@/components';
@@ -37,6 +38,7 @@ const sectionComponents = {
   'uuid-generator': UuidGenerator,
   'text-deduplicator': TextDeduplicator,
   'json-formatter': JsonFormatter,
+  'text-sorter': TextSorter,
 } as const;
 
 function App() {

@@ -13,7 +13,8 @@ export type Section =
   | 'password-generator'
   | 'uuid-generator'
   | 'text-deduplicator'
-  | 'json-formatter';
+  | 'json-formatter'
+  | 'text-sorter';
 
 export type AppState = {
   activeSection: Section;

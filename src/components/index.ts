@@ -23,6 +23,7 @@ export { default as CpfGenerator } from './generators/CpfGenerator';
 export { default as JsonFormatter } from './generators/JsonFormatter';
 export { default as PasswordGenerator } from './generators/PasswordGenerator';
 export { default as TextDeduplicator } from './generators/TextDeduplicator';
+export { default as TextSorter } from './generators/TextSorter';
 export { default as UuidGenerator } from './generators/UuidGenerator';
 
 // Componentes de validação (Validators)
