@@ -107,6 +107,13 @@ const sections = [
     description: 'Remova linhas duplicadas de qualquer texto',
     category: 'Texto',
   },
+  {
+    id: 'json-formatter' as Section,
+    title: 'Formatador de JSON',
+    icon: 'FileText',
+    description: 'Formate e valide JSON de forma rápida',
+    category: 'Texto',
+  },
 ];
 
 export default function Sidebar({

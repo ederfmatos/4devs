@@ -20,6 +20,7 @@ export { default as FeriadosSearcher } from './searchers/FeriadosSearcher';
 export { default as CepGenerator } from './generators/CepGenerator';
 export { default as CnpjGenerator } from './generators/CnpjGenerator';
 export { default as CpfGenerator } from './generators/CpfGenerator';
+export { default as JsonFormatter } from './generators/JsonFormatter';
 export { default as PasswordGenerator } from './generators/PasswordGenerator';
 export { default as TextDeduplicator } from './generators/TextDeduplicator';
 export { default as UuidGenerator } from './generators/UuidGenerator';

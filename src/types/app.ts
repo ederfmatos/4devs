@@ -12,7 +12,8 @@ export type Section =
   | 'cep-generator'
   | 'password-generator'
   | 'uuid-generator'
-  | 'text-deduplicator';
+  | 'text-deduplicator'
+  | 'json-formatter';
 
 export type AppState = {
   activeSection: Section;

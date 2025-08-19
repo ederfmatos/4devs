@@ -1,21 +1,22 @@
 import {
-    Button,
-    CambioSearcher,
-    CepGenerator,
-    CepSearcher,
-    CnpjGenerator,
-    CnpjSearcher,
-    CnpjValidator,
-    CpfGenerator,
-    CpfValidator,
-    DominiosSearcher,
-    FeriadosSearcher,
-    PasswordGenerator,
-    PasswordValidator,
-    Sidebar,
-    TextDeduplicator,
-    ThemeToggle,
-    UuidGenerator,
+  Button,
+  CambioSearcher,
+  CepGenerator,
+  CepSearcher,
+  CnpjGenerator,
+  CnpjSearcher,
+  CnpjValidator,
+  CpfGenerator,
+  CpfValidator,
+  DominiosSearcher,
+  FeriadosSearcher,
+  JsonFormatter,
+  PasswordGenerator,
+  PasswordValidator,
+  Sidebar,
+  TextDeduplicator,
+  ThemeToggle,
+  UuidGenerator,
 } from '@/components';
 import type { Section } from '@/types';
 import { useState } from 'react';
@@ -35,6 +36,7 @@ const sectionComponents = {
   'password-generator': PasswordGenerator,
   'uuid-generator': UuidGenerator,
   'text-deduplicator': TextDeduplicator,
+  'json-formatter': JsonFormatter,
 } as const;
 
 function App() {
