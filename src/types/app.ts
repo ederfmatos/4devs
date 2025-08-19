@@ -11,7 +11,8 @@ export type Section =
   | 'cnpj-generator'
   | 'cep-generator'
   | 'password-generator'
-  | 'uuid-generator';
+  | 'uuid-generator'
+  | 'text-deduplicator';
 
 export type AppState = {
   activeSection: Section;

@@ -100,6 +100,13 @@ const sections = [
     description: 'Gere UUIDs em diferentes versões',
     category: 'Geradores',
   },
+  {
+    id: 'text-deduplicator' as Section,
+    title: 'Removedor de Duplicatas',
+    icon: 'FileText',
+    description: 'Remova linhas duplicadas de qualquer texto',
+    category: 'Texto',
+  },
 ];
 
 export default function Sidebar({
@@ -118,6 +125,7 @@ export default function Sidebar({
       CreditCard: Icons.CreditCard,
       Key: Icons.Key,
       Hash: Icons.Hash,
+      FileText: Icons.FileText,
     };
     return iconMap[iconName] || Icons.Search;
   };
@@ -131,7 +139,7 @@ export default function Sidebar({
       acc[section.category].push(section);
       return acc;
     },
-    {} as { [key: string]: typeof sections }
+    {} as { [key: string]: typeof sections },
   );
 
   return (
@@ -223,7 +231,7 @@ export default function Sidebar({
                       })}
                     </div>
                   </div>
-                )
+                ),
               )}
             </div>
           </nav>
