@@ -74,7 +74,7 @@ function App() {
         <ThemeToggle size='md' />
       </div>
 
-      <div className='fixed top-4 right-4 z-50 lg:block hidden'>
+      <div className='fixed top-4 right-4 z-50 block'>
         <ThemeToggle size='md' />
       </div>
 
