@@ -71,7 +71,6 @@ function App() {
             />
           </svg>
         </Button>
-        <ThemeToggle size='md' />
       </div>
 
       <div className='fixed top-4 right-4 z-50 block'>
