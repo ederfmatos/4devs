@@ -121,6 +121,20 @@ const sections = [
     description: 'Ordene linhas alfabeticamente',
     category: 'Texto',
   },
+  {
+    id: 'base64-encoder' as Section,
+    title: 'Codificador Base64',
+    icon: 'Key',
+    description: 'Codifique texto em Base64',
+    category: 'Codificação',
+  },
+  {
+    id: 'base64-decoder' as Section,
+    title: 'Decodificador Base64',
+    icon: 'Key',
+    description: 'Decodifique texto Base64',
+    category: 'Codificação',
+  },
 ];
 
 export default function Sidebar({

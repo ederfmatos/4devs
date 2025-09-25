@@ -1,4 +1,6 @@
 import {
+  Base64Decoder,
+  Base64Encoder,
   Button,
   CambioSearcher,
   CepGenerator,
@@ -39,6 +41,8 @@ const sectionComponents = {
   'text-deduplicator': TextDeduplicator,
   'json-formatter': JsonFormatter,
   'text-sorter': TextSorter,
+  'base64-encoder': Base64Encoder,
+  'base64-decoder': Base64Decoder,
 } as const;
 
 function App() {

@@ -17,6 +17,8 @@ export { default as DominiosSearcher } from './searchers/DominiosSearcher';
 export { default as FeriadosSearcher } from './searchers/FeriadosSearcher';
 
 // Componentes de geração (Generators)
+export { default as Base64Decoder } from './generators/Base64Decoder';
+export { default as Base64Encoder } from './generators/Base64Encoder';
 export { default as CepGenerator } from './generators/CepGenerator';
 export { default as CnpjGenerator } from './generators/CnpjGenerator';
 export { default as CpfGenerator } from './generators/CpfGenerator';

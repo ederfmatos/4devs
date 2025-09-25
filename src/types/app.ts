@@ -14,7 +14,9 @@ export type Section =
   | 'uuid-generator'
   | 'text-deduplicator'
   | 'json-formatter'
-  | 'text-sorter';
+  | 'text-sorter'
+  | 'base64-encoder'
+  | 'base64-decoder';
 
 export type AppState = {
   activeSection: Section;
