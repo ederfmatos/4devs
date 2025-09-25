@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Password } from '@/domain';
 import Icons from '@/components/Icons';
 import Button from '@/components/Button';
@@ -7,7 +7,11 @@ import Text from '@/components/Text';
 
 const PasswordValidatorComponent = () => {
   const [password, setPassword] = useState('');
-  const [validationResult, setValidationResult] = useState<any>(null);
+  const [validationResult, setValidationResult] = useState<{
+    isValid: boolean;
+    strength?: any;
+    errors?: string[];
+  } | null>(null);
 
   const validatePassword = () => {
     if (!password.trim()) {

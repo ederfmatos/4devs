@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { Password } from '@/domain';
 import type { PasswordOptions } from '@/domain/Password';
+import { useState } from 'react';
 
 export const usePasswordGenerator = () => {
   const [options, setOptions] = useState<PasswordOptions>({
@@ -34,13 +34,9 @@ export const usePasswordGenerator = () => {
   };
 
   const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setShowCopyFeedback(true);
-      setTimeout(() => setShowCopyFeedback(false), 2000);
-    } catch (err) {
-      console.error('Erro ao copiar:', err);
-    }
+    await navigator.clipboard.writeText(text);
+    setShowCopyFeedback(true);
+    setTimeout(() => setShowCopyFeedback(false), 2000);
   };
 
   const copyAllPasswords = async () => {

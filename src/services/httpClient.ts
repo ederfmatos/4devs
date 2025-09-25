@@ -1,8 +1,12 @@
 class FetchHttpClient {
-  constructor(private readonly _baseURL: string) {}
+  private readonly baseURL: string;
+
+  constructor(baseURL: string) {
+    this.baseURL = baseURL;
+  }
 
   async get<T>(url: string): Promise<T> {
-    const response = await fetch(`${this._baseURL}${url}`);
+    const response = await fetch(`${this.baseURL}${url}`);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

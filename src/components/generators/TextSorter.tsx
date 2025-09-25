@@ -32,7 +32,7 @@ const TextSorter = () => {
     try {
       await navigator.clipboard.writeText(outputText);
       showCopyFeedback('Texto ordenado copiado!');
-    } catch (_err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };

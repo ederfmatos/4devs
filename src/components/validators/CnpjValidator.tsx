@@ -1,10 +1,14 @@
+import React, { useState } from 'react';
 import { Button, Icons, Input, Text } from '@/components';
 import { Cnpj } from '@/domain';
-import { useState } from 'react';
 
 const CnpjValidator = () => {
   const [cnpj, setCnpj] = useState('');
-  const [validationResult, setValidationResult] = useState<any>(null);
+  const [validationResult, setValidationResult] = useState<{
+    isValid: boolean;
+    errors?: string[];
+    steps?: any[];
+  } | null>(null);
 
   const formatCnpj = (value: string) => {
     const cleaned = value.replace(/\D/g, '');
@@ -14,7 +18,7 @@ const CnpjValidator = () => {
     }
     return value.replace(
       /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
-      '$1.$2.$3/$4-$5'
+      '$1.$2.$3/$4-$5',
     );
   };
 

@@ -20,7 +20,7 @@ const CnpjGeneratorComponent = () => {
     try {
       await navigator.clipboard.writeText(text);
       showCopyFeedback('CNPJ copiado!');
-    } catch (err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };
@@ -35,7 +35,7 @@ const CnpjGeneratorComponent = () => {
     try {
       await navigator.clipboard.writeText(cnpjsText);
       showCopyFeedback('Todos os CNPJs copiados!');
-    } catch (err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };
@@ -86,7 +86,7 @@ const CnpjGeneratorComponent = () => {
               value={quantity}
               onChange={e =>
                 setQuantity(
-                  Math.max(1, Math.min(100, parseInt(e.target.value) || 1))
+                  Math.max(1, Math.min(100, parseInt(e.target.value) || 1)),
                 )
               }
             />

@@ -40,7 +40,7 @@ export class Password {
    */
   static generateMultiple(
     count: number,
-    options: Partial<PasswordOptions> = {}
+    options: Partial<PasswordOptions> = {},
   ): Password[] {
     return Array.from({ length: count }, () => Password.generate(options));
   }
@@ -242,7 +242,7 @@ export class Password {
     checks.push({
       name: 'Sem padrões comuns',
       passed: !/123|abc|qwe|asd|zxc|password|senha|admin|root|user/.test(
-        password.toLowerCase()
+        password.toLowerCase(),
       ),
       message: 'Senha não deve conter padrões comuns',
     });
@@ -261,7 +261,7 @@ export class Password {
       switch (check.name) {
         case 'Comprimento mínimo':
           suggestions.push(
-            'Aumente o comprimento da senha para pelo menos 8 caracteres'
+            'Aumente o comprimento da senha para pelo menos 8 caracteres',
           );
           break;
         case 'Letras minúsculas':
@@ -281,7 +281,7 @@ export class Password {
           break;
         case 'Sem padrões comuns':
           suggestions.push(
-            'Evite padrões comuns como "123", "abc", "password"'
+            'Evite padrões comuns como "123", "abc", "password"',
           );
           break;
       }

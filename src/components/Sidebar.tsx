@@ -1,9 +1,9 @@
 import { Icons, Text } from '@/components';
 import type { Section } from '@/types';
+import { Link } from 'react-router-dom';
 
 interface SidebarProps {
   activeSection: Section;
-  onSectionChange: (section: Section) => void;
   isOpen?: boolean;
   onClose?: () => void;
 }
@@ -66,6 +66,34 @@ const sections = [
     category: 'Validadores',
   },
   {
+    id: 'uuid-validator' as Section,
+    title: 'Validador de UUID',
+    icon: 'Hash',
+    description: 'Valide UUIDs e identifique versões',
+    category: 'Validadores',
+  },
+  {
+    id: 'credit-card-validator' as Section,
+    title: 'Validador de Cartão',
+    icon: 'CreditCard',
+    description: 'Valide cartões com algoritmo Luhn',
+    category: 'Validadores',
+  },
+  {
+    id: 'personal-document-validator' as Section,
+    title: 'Documentos Pessoais',
+    icon: 'CreditCard',
+    description: 'PIS, Título de Eleitor, Passaporte',
+    category: 'Documentos',
+  },
+  {
+    id: 'global-document-validator' as Section,
+    title: 'Documentos Globais',
+    icon: 'CreditCard',
+    description: 'IBAN, ISBN, ISSN, SUS, IMEI',
+    category: 'Documentos',
+  },
+  {
     id: 'cpf-generator' as Section,
     title: 'Gerador de CPF',
     icon: 'CreditCard',
@@ -101,6 +129,62 @@ const sections = [
     category: 'Geradores',
   },
   {
+    id: 'credit-card-generator' as Section,
+    title: 'Gerador de Cartão',
+    icon: 'CreditCard',
+    description: 'Cartões de crédito válidos (Luhn)',
+    category: 'Geradores',
+  },
+  {
+    id: 'fake-company-generator' as Section,
+    title: 'Gerador de Empresa',
+    icon: 'Building',
+    description: 'Empresas fictícias completas',
+    category: 'Geradores',
+  },
+  {
+    id: 'lorem-ipsum-generator' as Section,
+    title: 'Gerador Lorem Ipsum',
+    icon: 'FileText',
+    description: 'Texto fake em vários idiomas',
+    category: 'Geradores',
+  },
+  {
+    id: 'hash-generator' as Section,
+    title: 'Gerador de HASH',
+    icon: 'Hash',
+    description: 'MD5, SHA-1, SHA-256',
+    category: 'Geradores',
+  },
+  {
+    id: 'personal-document-generator' as Section,
+    title: 'Gerador Docs. Pessoais',
+    icon: 'CreditCard',
+    description: 'PIS, Título de Eleitor, Passaporte',
+    category: 'Geradores',
+  },
+  {
+    id: 'vehicle-document-generator' as Section,
+    title: 'Gerador Docs. Veiculares',
+    icon: 'CreditCard',
+    description: 'RENAVAM, Placas',
+    category: 'Geradores',
+  },
+  {
+    id: 'fiscal-document-generator' as Section,
+    title: 'Gerador Docs. Fiscais',
+    icon: 'CreditCard',
+    description: 'Chave NFe',
+    category: 'Geradores',
+  },
+  {
+    id: 'global-document-generator' as Section,
+    title: 'Gerador Docs. Globais',
+    icon: 'CreditCard',
+    description: 'IBAN, ISBN, ISSN, SUS, IMEI',
+    category: 'Geradores',
+  },
+  {
     id: 'text-deduplicator' as Section,
     title: 'Removedor de Duplicatas',
     icon: 'FileText',
@@ -122,29 +206,58 @@ const sections = [
     category: 'Texto',
   },
   {
-    id: 'base64-encoder' as Section,
-    title: 'Codificador Base64',
+    id: 'base64' as Section,
+    title: 'Conversor Base64',
     icon: 'Key',
-    description: 'Codifique texto em Base64',
+    description: 'Codifique e decodifique texto em Base64',
     category: 'Codificação',
   },
   {
-    id: 'base64-decoder' as Section,
-    title: 'Decodificador Base64',
-    icon: 'Key',
-    description: 'Decodifique texto Base64',
-    category: 'Codificação',
+    id: 'regex-tester' as Section,
+    title: 'Testador de Regex',
+    icon: 'Search',
+    description: 'Teste expressões regulares com highlight',
+    category: 'Ferramentas',
+  },
+  {
+    id: 'case-converter' as Section,
+    title: 'Conversor de Cases',
+    icon: 'FileText',
+    description: 'camelCase, snake_case, etc.',
+    category: 'Ferramentas',
+  },
+  {
+    id: 'text-counter' as Section,
+    title: 'Contador de Texto',
+    icon: 'FileText',
+    description: 'Palavras, caracteres, estatísticas',
+    category: 'Ferramentas',
+  },
+  {
+    id: 'number-converter' as Section,
+    title: 'Conversor de Números',
+    icon: 'Hash',
+    description: 'Decimal, binário, hex, romano',
+    category: 'Ferramentas',
+  },
+  {
+    id: 'cron-generator' as Section,
+    title: 'Gerador de Cron',
+    icon: 'Calendar',
+    description: 'Expressões cron e validação',
+    category: 'Ferramentas',
   },
 ];
 
 export default function Sidebar({
   activeSection,
-  onSectionChange,
   isOpen = false,
   onClose,
 }: SidebarProps) {
   const getIconComponent = (iconName: string) => {
-    const iconMap: { [key: string]: any } = {
+    const iconMap: {
+      [key: string]: React.ComponentType<{ className?: string }>;
+    } = {
       Search: Icons.Search,
       Building: Icons.Building,
       Calendar: Icons.Calendar,
@@ -223,10 +336,10 @@ export default function Sidebar({
                         const isActive = activeSection === section.id;
 
                         return (
-                          <button
+                          <Link
                             key={section.id}
+                            to={`/${section.id}`}
                             onClick={() => {
-                              onSectionChange(section.id);
                               if (onClose) onClose();
                             }}
                             className={`
@@ -254,7 +367,7 @@ export default function Sidebar({
                                 {section.title}
                               </Text>
                             </div>
-                          </button>
+                          </Link>
                         );
                       })}
                     </div>

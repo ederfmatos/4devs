@@ -10,7 +10,7 @@ export class Cep {
    */
   static generate(): Cep {
     const numbers = Array.from({ length: 8 }, () =>
-      Math.floor(Math.random() * 10)
+      Math.floor(Math.random() * 10),
     );
     return new Cep(numbers.join(''));
   }

@@ -24,7 +24,7 @@ const TextDeduplicator = () => {
     try {
       await navigator.clipboard.writeText(outputText);
       showCopyFeedback('Texto copiado!');
-    } catch (err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };

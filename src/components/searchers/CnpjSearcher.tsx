@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCnpjSearcher } from './CnpjSearcher.hook';
 import Icons from '@/components/Icons';
 import Button from '@/components/Button';

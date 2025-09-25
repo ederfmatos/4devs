@@ -14,7 +14,9 @@ export default function LabelValue({
   valueClassName = '',
 }: LabelValueProps) {
   return (
-    <div className={`flex justify-between items-center ${className}`}>
+    <div
+      className={`flex justify-between items-center ${className} inline-flex`}
+    >
       <Text variant='body-sm' color='secondary'>
         {label}:
       </Text>

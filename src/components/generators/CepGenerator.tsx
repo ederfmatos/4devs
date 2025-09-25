@@ -1,9 +1,9 @@
 import {
-    Button,
-    CopyToClipboardButton,
-    Icons,
-    Select,
-    Text,
+  Button,
+  CopyToClipboardButton,
+  Icons,
+  Select,
+  Text,
 } from '@/components';
 import { useCepGenerator } from './CepGenerator.hook';
 

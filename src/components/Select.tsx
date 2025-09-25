@@ -1,5 +1,5 @@
 import { Icons, Text } from '@/components';
-import {
+import React, {
   SelectHTMLAttributes,
   forwardRef,
   useEffect,
@@ -56,7 +56,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
       disabled,
       ...props
     },
-    ref
+    ref: _ref,
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
@@ -188,7 +188,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         if (selectedOptions.length === 0) return placeholder;
         if (selectedOptions.length === 1) {
           const option = options.find(
-            opt => String(opt.value) === selectedOptions[0]
+            opt => String(opt.value) === selectedOptions[0],
           );
           return option?.label || placeholder;
         }
@@ -325,7 +325,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                         <input
                           type='checkbox'
                           checked={selectedOptions.includes(
-                            String(option.value)
+                            String(option.value),
                           )}
                           readOnly
                           className='mr-2'
@@ -358,7 +358,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Select.displayName = 'Select';

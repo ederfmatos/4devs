@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCepSearcher } from './CepSearcher.hook';
 import Icons from '@/components/Icons';
 import Button from '@/components/Button';

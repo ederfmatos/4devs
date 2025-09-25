@@ -13,7 +13,7 @@ export type FormatOptions = {
   locale?: string;
 };
 
-export type ApiResponse<T = any> = {
+export type ApiResponse<T = unknown> = {
   data: T;
   status: number;
   message?: string;
@@ -24,7 +24,7 @@ export type ApiError = {
   message: string;
   status: number;
   code?: string;
-  details?: any;
+  details?: unknown;
 };
 
 export type PaginationParams = {
@@ -40,7 +40,7 @@ export type SortParams = {
 };
 
 export type FilterParams = {
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 export type SearchParams = PaginationParams & {
@@ -61,13 +61,13 @@ export type ThrottleOptions = {
   trailing?: boolean;
 };
 
-export type LocalStorageItem<T = any> = {
+export type LocalStorageItem<T = unknown> = {
   key: string;
   value: T;
   expiresAt?: number;
 };
 
-export type SessionStorageItem<T = any> = {
+export type SessionStorageItem<T = unknown> = {
   key: string;
   value: T;
   expiresAt?: number;

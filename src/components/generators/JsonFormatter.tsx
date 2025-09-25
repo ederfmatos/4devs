@@ -21,8 +21,9 @@ const JsonFormatter = () => {
       const formatted = JSON.stringify(parsed, null, 2);
       setFormattedJson(formatted);
       setError('');
-    } catch (err: any) {
-      setError('JSON inválido: ' + err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Erro desconhecido';
+      setError('JSON inválido: ' + message);
       setFormattedJson('');
     }
   };
@@ -33,7 +34,7 @@ const JsonFormatter = () => {
     try {
       await navigator.clipboard.writeText(formattedJson);
       showCopyFeedback('JSON formatado copiado!');
-    } catch (_err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };
@@ -61,8 +62,9 @@ const JsonFormatter = () => {
       const minified = JSON.stringify(parsed);
       setFormattedJson(minified);
       setError('');
-    } catch (err: any) {
-      setError('JSON inválido: ' + err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Erro desconhecido';
+      setError('JSON inválido: ' + message);
       setFormattedJson('');
     }
   };

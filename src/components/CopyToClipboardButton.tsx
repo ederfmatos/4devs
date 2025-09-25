@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import type { CopyToClipboardButtonProps } from '@/types';
 import Icons from '@/components/Icons';
+import type { CopyToClipboardButtonProps } from '@/types';
+import { useState } from 'react';
 
 const CopyToClipboardButton = ({
   text,
@@ -12,7 +12,6 @@ const CopyToClipboardButton = ({
   children,
   showFeedback = true,
   feedbackMessage = 'Copiado!',
-  errorMessage = 'Erro ao copiar',
 }: CopyToClipboardButtonProps) => {
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,8 +28,8 @@ const CopyToClipboardButton = ({
       if (showFeedback) {
         setTimeout(() => setIsCopied(false), 2000);
       }
-    } catch (err) {
-      onError?.(errorMessage);
+    } catch {
+      onError?.();
     } finally {
       setIsLoading(false);
     }

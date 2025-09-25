@@ -17,7 +17,7 @@ export type CepData = {
 export type CnpjData = {
   uf: string;
   cep: string;
-  qsa: any[] | null;
+  qsa: unknown[] | null;
   cnpj: string;
   pais: string | null;
   email: string | null;

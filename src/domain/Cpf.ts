@@ -1,24 +1,41 @@
+export type EstadoCpf =
+  | 'RS'
+  | 'DF-GO-MS-TO'
+  | 'MT'
+  | 'BA-SE'
+  | 'PR'
+  | 'CE-MA-PI'
+  | 'PE-RN-PB-AL'
+  | 'MG'
+  | 'RJ-ES'
+  | 'SP'
+  | 'RO-AC-AM-RR-AP-PA';
+
 export class Cpf {
   private value: string;
 
   constructor(value: string = '') {
-    this.value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    this.value = value.replace(/\D/g, '');
   }
 
   /**
    * Cria uma instância de CPF com valor aleatório
    */
-  static generate(): Cpf {
-    // Gera 9 dígitos aleatórios
-    const digits = Array.from({ length: 9 }, () =>
-      Math.floor(Math.random() * 10)
+  static generate(estado?: EstadoCpf): Cpf {
+    const digits = Array.from({ length: 8 }, () =>
+      Math.floor(Math.random() * 10),
     );
 
-    // Calcula o primeiro dígito verificador
+    if (estado) {
+      const estadoDigit = Cpf.getEstadoDigit(estado);
+      digits.push(estadoDigit);
+    } else {
+      digits.push(Math.floor(Math.random() * 10));
+    }
+
     const firstDigit = Cpf.calculateDigit(digits);
     digits.push(firstDigit);
 
-    // Calcula o segundo dígito verificador
     const secondDigit = Cpf.calculateDigit(digits);
     digits.push(secondDigit);
 
@@ -28,8 +45,51 @@ export class Cpf {
   /**
    * Gera múltiplos CPFs aleatórios
    */
-  static generateMultiple(count: number): Cpf[] {
-    return Array.from({ length: count }, () => Cpf.generate());
+  static generateMultiple(count: number, estado?: EstadoCpf): Cpf[] {
+    return Array.from({ length: count }, () => Cpf.generate(estado));
+  }
+
+  /**
+   * Retorna o dígito correspondente ao estado
+   */
+  private static getEstadoDigit(estado: EstadoCpf): number {
+    const estadoMap: { [_key in EstadoCpf]: number } = {
+      RS: 0,
+      'DF-GO-MS-TO': 1,
+      MT: 2,
+      'BA-SE': 3,
+      PR: 4,
+      'CE-MA-PI': 5,
+      'PE-RN-PB-AL': 6,
+      MG: 7,
+      SP: 8,
+      'RJ-ES': 9,
+      'RO-AC-AM-RR-AP-PA': 1,
+    };
+    return estadoMap[estado];
+  }
+
+  /**
+   * Retorna o estado baseado no 9º dígito do CPF
+   */
+  getEstado(): EstadoCpf | null {
+    if (this.value.length !== 11) return null;
+
+    const ninthDigit = parseInt(this.value[8]);
+    const estadoMap: { [key: number]: EstadoCpf } = {
+      0: 'RS',
+      1: 'DF-GO-MS-TO',
+      2: 'MT',
+      3: 'BA-SE',
+      4: 'PR',
+      5: 'CE-MA-PI',
+      6: 'PE-RN-PB-AL',
+      7: 'MG',
+      8: 'SP',
+      9: 'RJ-ES',
+    };
+
+    return estadoMap[ninthDigit] || null;
   }
 
   /**
@@ -87,7 +147,12 @@ export class Cpf {
   } {
     const digits = this.value.split('').map(Number);
     const errors: string[] = [];
-    const steps: any[] = [];
+    const steps: {
+      step: string;
+      passed: boolean;
+      expected?: number;
+      found?: number;
+    }[] = [];
 
     // Passo 1: Verificar se tem 11 dígitos
     const has11Digits = digits.length === 11;
@@ -123,7 +188,7 @@ export class Cpf {
       });
       if (!firstDigitValid) {
         errors.push(
-          `Primeiro dígito verificador incorreto. Esperado: ${expectedFirstDigit}, Encontrado: ${digits[9]}`
+          `Primeiro dígito verificador incorreto. Esperado: ${expectedFirstDigit}, Encontrado: ${digits[9]}`,
         );
       }
 
@@ -139,7 +204,7 @@ export class Cpf {
         });
         if (!secondDigitValid) {
           errors.push(
-            `Segundo dígito verificador incorreto. Esperado: ${expectedSecondDigit}, Encontrado: ${digits[10]}`
+            `Segundo dígito verificador incorreto. Esperado: ${expectedSecondDigit}, Encontrado: ${digits[10]}`,
           );
         }
       }

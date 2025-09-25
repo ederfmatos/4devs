@@ -10,7 +10,7 @@ export class Cnpj {
    */
   static generate(): Cnpj {
     const digits = Array.from({ length: 12 }, () =>
-      Math.floor(Math.random() * 10)
+      Math.floor(Math.random() * 10),
     );
 
     const firstDigit = Cnpj.calculateFirstDigit(digits);
@@ -93,7 +93,12 @@ export class Cnpj {
   } {
     const digits = this.value.split('').map(Number);
     const errors: string[] = [];
-    const steps: any[] = [];
+    const steps: {
+      step: string;
+      passed: boolean;
+      expected?: number;
+      found?: number;
+    }[] = [];
 
     const has14Digits = digits.length === 14;
     steps.push({
@@ -126,13 +131,13 @@ export class Cnpj {
       });
       if (!firstDigitValid) {
         errors.push(
-          `Primeiro dígito verificador incorreto. Esperado: ${expectedFirstDigit}, Encontrado: ${digits[12]}`
+          `Primeiro dígito verificador incorreto. Esperado: ${expectedFirstDigit}, Encontrado: ${digits[12]}`,
         );
       }
 
       if (firstDigitValid) {
         const expectedSecondDigit = Cnpj.calculateSecondDigit(
-          digits.slice(0, 13)
+          digits.slice(0, 13),
         );
         const secondDigitValid = digits[13] === expectedSecondDigit;
         steps.push({
@@ -143,7 +148,7 @@ export class Cnpj {
         });
         if (!secondDigitValid) {
           errors.push(
-            `Segundo dígito verificador incorreto. Esperado: ${expectedSecondDigit}, Encontrado: ${digits[13]}`
+            `Segundo dígito verificador incorreto. Esperado: ${expectedSecondDigit}, Encontrado: ${digits[13]}`,
           );
         }
       }
@@ -164,5 +169,12 @@ export class Cnpj {
     if (digits.length !== 14) return this.value;
 
     return `${digits.slice(0, 2)}.${digits.slice(2, 5)}.${digits.slice(5, 8)}/${digits.slice(8, 12)}-${digits.slice(12)}`;
+  }
+
+  /**
+   * Retorna apenas os dígitos (sem formatação)
+   */
+  getDigits(): string {
+    return this.value;
   }
 }

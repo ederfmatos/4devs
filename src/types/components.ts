@@ -3,14 +3,13 @@ import { ReactNode } from 'react';
 export type CopyToClipboardButtonProps = {
   text: string;
   onCopy?: () => void;
-  onError?: (error: string) => void;
+  onError?: () => void;
   className?: string;
   size?: 'sm' | 'md' | 'lg';
   variant?: 'default' | 'ghost' | 'outline';
   children?: ReactNode;
   showFeedback?: boolean;
   feedbackMessage?: string;
-  errorMessage?: string;
 };
 
 export type GeneratedCep = {
@@ -69,7 +68,6 @@ export type NavItemProps = {
 
 export type SidebarProps = {
   activeSection: import('./app').Section;
-  onSectionChange: (section: import('./app').Section) => void;
   isOpen: boolean;
   onClose: () => void;
 };

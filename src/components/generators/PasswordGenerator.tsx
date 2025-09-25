@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const PasswordGenerator = () => {
   const [generatedPassword, setGeneratedPassword] = useState<Password | null>(
-    null
+    null,
   );
   const [quantity, setQuantity] = useState(1);
   const [multipleResults, setMultipleResults] = useState<Password[]>([]);
@@ -33,8 +33,10 @@ const PasswordGenerator = () => {
       const password = Password.generate(options);
       setGeneratedPassword(password);
       setMultipleResults([]);
-    } catch (error: any) {
-      console.error('Erro ao gerar senha:', error.message);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : 'Erro desconhecido';
+      showCopyFeedback('Erro ao gerar senha:' + message);
     }
   };
 
@@ -43,8 +45,10 @@ const PasswordGenerator = () => {
       const passwords = Password.generateMultiple(quantity, options);
       setMultipleResults(passwords);
       setGeneratedPassword(null);
-    } catch (error: any) {
-      console.error('Erro ao gerar senhas:', error.message);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : 'Erro desconhecido';
+      showCopyFeedback('Erro ao gerar senhas:' + message);
     }
   };
 
@@ -52,7 +56,7 @@ const PasswordGenerator = () => {
     try {
       await navigator.clipboard.writeText(text);
       showCopyFeedback('Senha copiada!');
-    } catch (err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };
@@ -64,7 +68,7 @@ const PasswordGenerator = () => {
     try {
       await navigator.clipboard.writeText(allPasswords);
       showCopyFeedback('Todas as senhas copiadas!');
-    } catch (err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };
@@ -74,20 +78,15 @@ const PasswordGenerator = () => {
     setTimeout(() => setCopyFeedback(''), 2000);
   };
 
-  const clearResults = () => {
-    setGeneratedPassword(null);
-    setMultipleResults([]);
-  };
-
   const updateOption = (
     key: keyof PasswordOptions,
-    value: boolean | number
+    value: boolean | number,
   ) => {
     setOptions((prev: PasswordOptions) => ({ ...prev, [key]: value }));
   };
 
   const getPasswordStrength = (
-    password: string
+    password: string,
   ): { level: string; color: string; percentage: number } => {
     if (!password || password === 'Selecione pelo menos um tipo de caractere') {
       return { level: 'Inválida', color: 'text-red-600', percentage: 0 };

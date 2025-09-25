@@ -1,8 +1,8 @@
 import {
-  Base64Decoder,
-  Base64Encoder,
+  Base64Converter,
   Button,
   CambioSearcher,
+  CaseConverter,
   CepGenerator,
   CepSearcher,
   CnpjGenerator,
@@ -10,19 +10,42 @@ import {
   CnpjValidator,
   CpfGenerator,
   CpfValidator,
+  CreditCardGenerator,
+  CreditCardValidator,
+  CronGenerator,
   DominiosSearcher,
+  FakeCompanyGenerator,
   FeriadosSearcher,
+  FiscalDocumentGenerator,
+  GlobalDocumentGenerator,
+  GlobalDocumentValidator,
+  HashGenerator,
   JsonFormatter,
+  LoremIpsumGenerator,
+  NumberConverter,
   PasswordGenerator,
   PasswordValidator,
+  PersonalDocumentGenerator,
+  PersonalDocumentValidator,
+  RegexTester,
   Sidebar,
+  TextCounter,
   TextDeduplicator,
   TextSorter,
   ThemeToggle,
   UuidGenerator,
+  UuidValidator,
+  VehicleDocumentGenerator,
 } from '@/components';
 import type { Section } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 
 const sectionComponents = {
   cep: CepSearcher,
@@ -33,26 +56,46 @@ const sectionComponents = {
   'cpf-validator': CpfValidator,
   'cnpj-validator': CnpjValidator,
   'password-validator': PasswordValidator,
+  'uuid-validator': UuidValidator,
+  'credit-card-validator': CreditCardValidator,
+  'personal-document-validator': PersonalDocumentValidator,
+  'global-document-validator': GlobalDocumentValidator,
   'cpf-generator': CpfGenerator,
   'cnpj-generator': CnpjGenerator,
   'cep-generator': CepGenerator,
   'password-generator': PasswordGenerator,
   'uuid-generator': UuidGenerator,
+  'credit-card-generator': CreditCardGenerator,
+  'fake-company-generator': FakeCompanyGenerator,
+  'lorem-ipsum-generator': LoremIpsumGenerator,
+  'hash-generator': HashGenerator,
+  'personal-document-generator': PersonalDocumentGenerator,
+  'vehicle-document-generator': VehicleDocumentGenerator,
+  'fiscal-document-generator': FiscalDocumentGenerator,
+  'global-document-generator': GlobalDocumentGenerator,
   'text-deduplicator': TextDeduplicator,
   'json-formatter': JsonFormatter,
   'text-sorter': TextSorter,
-  'base64-encoder': Base64Encoder,
-  'base64-decoder': Base64Decoder,
+  base64: Base64Converter,
+  'regex-tester': RegexTester,
+  'case-converter': CaseConverter,
+  'text-counter': TextCounter,
+  'number-converter': NumberConverter,
+  'cron-generator': CronGenerator,
 } as const;
 
 function App() {
-  const [activeSection, setActiveSection] = useState<Section>('cep');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const renderSection = () => {
-    const Component = sectionComponents[activeSection];
-    return Component ? <Component /> : <CepSearcher />;
-  };
+  const currentSection = location.pathname.slice(1) || 'cep';
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/cep', { replace: true });
+    }
+  }, [location.pathname, navigate]);
 
   return (
     <div className='bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-200'>
@@ -75,9 +118,10 @@ function App() {
             />
           </svg>
         </Button>
+        <ThemeToggle size='md' />
       </div>
 
-      <div className='fixed top-4 right-4 z-50 block'>
+      <div className='fixed top-4 right-4 z-50 lg:block hidden'>
         <ThemeToggle size='md' />
       </div>
 
@@ -89,15 +133,22 @@ function App() {
       )}
 
       <Sidebar
-        activeSection={activeSection}
-        onSectionChange={(section: Section) => setActiveSection(section)}
+        activeSection={currentSection as Section}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
       />
 
       <div className='lg:ml-64 transition-all duration-300'>
         <div className='container mx-auto px-4 py-4 lg:py-8'>
-          <div className='max-w-6xl mx-auto'>{renderSection()}</div>
+          <div className='max-w-6xl mx-auto'>
+            <Routes>
+              <Route path='/' element={<Navigate to='/cep' replace />} />
+              {Object.entries(sectionComponents).map(([key, Component]) => (
+                <Route key={key} path={`/${key}`} element={<Component />} />
+              ))}
+              <Route path='*' element={<Navigate to='/cep' replace />} />
+            </Routes>
+          </div>
         </div>
       </div>
     </div>

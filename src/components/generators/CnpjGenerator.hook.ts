@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { Cnpj } from '@/domain';
+import { useState } from 'react';
 
 export const useCnpjGenerator = () => {
   const [quantity, setQuantity] = useState(1);
@@ -16,13 +16,9 @@ export const useCnpjGenerator = () => {
   };
 
   const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setShowCopyFeedback(true);
-      setTimeout(() => setShowCopyFeedback(false), 2000);
-    } catch (err) {
-      console.error('Erro ao copiar:', err);
-    }
+    await navigator.clipboard.writeText(text);
+    setShowCopyFeedback(true);
+    setTimeout(() => setShowCopyFeedback(false), 2000);
   };
 
   const copyAllCnpjs = async () => {

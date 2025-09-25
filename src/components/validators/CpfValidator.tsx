@@ -1,10 +1,15 @@
+import React, { useState } from 'react';
 import { Button, Icons, Input, Text } from '@/components';
 import { Cpf } from '@/domain';
-import { useState } from 'react';
 
 const CpfValidator = () => {
   const [cpf, setCpf] = useState('');
-  const [validationResult, setValidationResult] = useState<any>(null);
+  const [validationResult, setValidationResult] = useState<{
+    isValid: boolean;
+    errors?: string[];
+    steps?: any[];
+    estado?: string;
+  } | null>(null);
 
   const formatCpf = (value: string) => {
     const cleaned = value.replace(/\D/g, '');
@@ -20,7 +25,8 @@ const CpfValidator = () => {
 
     const cpfInstance = new Cpf(cpf);
     const result = cpfInstance.validateWithDetails();
-    setValidationResult(result);
+    const estado = cpfInstance.getEstado();
+    setValidationResult({ ...result, estado });
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -91,6 +97,15 @@ const CpfValidator = () => {
               Limpar
             </Button>
           </div>
+
+          {validationResult.isValid && validationResult.estado && (
+            <div className='mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg'>
+              <Text variant='body-sm' color='info'>
+                <strong>Estado/Região de Emissão:</strong>{' '}
+                {validationResult.estado}
+              </Text>
+            </div>
+          )}
 
           {!validationResult.isValid && validationResult.errors && (
             <div className='mb-4'>

@@ -16,7 +16,7 @@ const UuidGenerator = () => {
   const generateUuidV6 = (): string => {
     const timestamp = Date.now();
     const randomBytes = Array.from({ length: 10 }, () =>
-      Math.floor(Math.random() * 256)
+      Math.floor(Math.random() * 256),
     );
 
     const timeLow = (timestamp & 0xffffffff).toString(16).padStart(8, '0');
@@ -35,7 +35,7 @@ const UuidGenerator = () => {
   const generateUuidV7 = (): string => {
     const timestamp = Date.now();
     const randomBytes = Array.from({ length: 10 }, () =>
-      Math.floor(Math.random() * 256)
+      Math.floor(Math.random() * 256),
     );
 
     const timeLow = (timestamp & 0xffffffff).toString(16).padStart(8, '0');
@@ -89,7 +89,7 @@ const UuidGenerator = () => {
     try {
       await navigator.clipboard.writeText(text);
       showCopyFeedback('UUID copiado!');
-    } catch (err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };
@@ -104,7 +104,7 @@ const UuidGenerator = () => {
     try {
       await navigator.clipboard.writeText(uuidsText);
       showCopyFeedback('Todos os UUIDs copiados!');
-    } catch (err) {
+    } catch {
       showCopyFeedback('Erro ao copiar');
     }
   };
@@ -112,11 +112,6 @@ const UuidGenerator = () => {
   const showCopyFeedback = (message: string) => {
     setCopyFeedback(message);
     setTimeout(() => setCopyFeedback(''), 2000);
-  };
-
-  const clearResults = () => {
-    setGeneratedUuid('');
-    setMultipleResults([]);
   };
 
   const getVersionColor = (version: UuidVersion): string => {

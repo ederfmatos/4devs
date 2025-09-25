@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDominiosSearcher } from './DominiosSearcher.hook';
 import Icons from '@/components/Icons';
 import Button from '@/components/Button';
